@@ -2926,9 +2926,9 @@ ElementsTable.Dropdown = (function()
             
             local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y
             
-            local listStartY = btnPos.Y + btnSize.Y
+            local listStartY = btnPos.Y + btnSize.Y + 6 
             
-            local spaceBelow = windowBottom - listStartY - 2
+            local spaceBelow = windowBottom - listStartY - 5
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
