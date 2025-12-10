@@ -1400,6 +1400,7 @@ Components.Dialog = (function()
         local NewDialog = {
             Buttons = 0
         }
+        
         NewDialog.TintFrame = New("TextButton", {
             Text = "",
             Size = UDim2.fromScale(1, 1),
@@ -1407,14 +1408,18 @@ Components.Dialog = (function()
             BackgroundTransparency = 1,
             AutoButtonColor = false,
             Parent = Dialog.Window.Root,
+            ZIndex = 6,
         })
+        
         local TintMotor, TintTransparency = Creator.SpringMotor(1, NewDialog.TintFrame, "BackgroundTransparency", true)
+        
         NewDialog.Root = New("CanvasGroup", {
             Size = UDim2.fromOffset(340, 180),
             AnchorPoint = Vector2.new(0.5, 0.5),
             Position = UDim2.fromScale(0.5, 0.5),
             GroupTransparency = 1,
             Parent = NewDialog.TintFrame,
+            ZIndex = 6,
             ThemeTag = {
                 BackgroundColor3 = "Dialog"
             },
@@ -1430,6 +1435,7 @@ Components.Dialog = (function()
                 },
             }),
         })
+        
         NewDialog.Title = New("TextLabel", {
             Text = "Dialog",
             FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.SemiBold),
@@ -1442,13 +1448,16 @@ Components.Dialog = (function()
                 TextColor3 = "Text"
             },
             Parent = NewDialog.Root,
+            ZIndex = 6,
         })
+        
         NewDialog.ButtonHolder = New("Frame", {
             Size = UDim2.new(1, - 40, 0, 36),
             AnchorPoint = Vector2.new(0.5, 1),
             Position = UDim2.new(0.5, 0, 1, - 15),
             BackgroundTransparency = 1,
             Parent = NewDialog.Root,
+            ZIndex = 6,
         }, {
             New("UIGridLayout", {
                 CellPadding = UDim2.new(0, 10, 0, 0),
@@ -1458,12 +1467,15 @@ Components.Dialog = (function()
                 SortOrder = Enum.SortOrder.LayoutOrder,
             }),
         })
+        
         NewDialog.Scale = New("UIScale", {
             Scale = 1.05,
             Parent = NewDialog.Root
         })
+        
         local RootMotor, RootTransparency = Creator.SpringMotor(1, NewDialog.Root, "GroupTransparency")
         local ScaleMotor, SetScale = Creator.SpringMotor(1.05, NewDialog.Scale, "Scale")
+        
         function NewDialog:Open()
             Library.DialogOpen = true
             NewDialog.Scale.Scale = 1.08
@@ -1471,14 +1483,17 @@ Components.Dialog = (function()
             RootTransparency(0)
             SetScale(1)
         end
+        
         function NewDialog:Close()
             Library.DialogOpen = false
             NewDialog.TintFrame:Destroy()
         end
+        
         function NewDialog:Button(Title, Callback)
             NewDialog.Buttons += 1
-            local Button = Components.Button("", NewDialog.ButtonHolder, true)
+            local Button = Components.Button("", NewDialog.ButtonHolder, true) 
             Button.Title.Text = Title or "Button"
+            
             Creator.AddSignal(Button.Frame.MouseButton1Click, function()
                 Library:SafeCallback(Callback or function()
                 end)
@@ -1486,10 +1501,12 @@ Components.Dialog = (function()
             end)
             return Button
         end
+        
         return NewDialog
     end
     return Dialog
 end)()
+
 Components.Notification = (function()
     local Spring = Flipper.Spring.new
     local New = Creator.New
@@ -1797,7 +1814,7 @@ Components.TitleBar = (function()
     return function(Config)
         local TitleBar = {}
 
-        local function BarButton(Icon, Pos, Parent, Callback, ZIndex)
+        local function BarButton(Icon, Pos, Parent, Callback)
             local Button = {
                 Callback = Callback or function()
                 end
@@ -1810,7 +1827,6 @@ Components.TitleBar = (function()
                 Parent = Parent,
                 Position = Pos,
                 Text = "",
-                ZIndex = ZIndex or 1,
             }, {
                 New("UICorner", {
                     CornerRadius = UDim.new(0, 8)
@@ -1822,7 +1838,6 @@ Components.TitleBar = (function()
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     BackgroundTransparency = 1,
                     Name = "Icon",
-                    ZIndex = ZIndex or 1,
                     ThemeTag = {
                         ImageColor3 = "Text"
                     },
@@ -1860,13 +1875,11 @@ Components.TitleBar = (function()
             Size = UDim2.new(1, 0, 0, 48),
             BackgroundTransparency = 1,
             Parent = Config.Parent,
-            ZIndex = 6,
         }, {
             New("Frame", {
                 Size = UDim2.new(1, - 20, 1, 0),
                 Position = UDim2.new(0, 16, 0, 0),
                 BackgroundTransparency = 1,
-                ZIndex = 6,
             }, {
                 New("UIListLayout", {
                     Padding = UDim.new(0, 10),
@@ -1877,7 +1890,6 @@ Components.TitleBar = (function()
                 New("ImageLabel", {
                     Size = UDim2.new(0, 32, 0, 32),
                     BackgroundTransparency = 1,
-                    ZIndex = 6,
                     Image = string.format("https://www.roblox.com/headshot-thumbnail/image?userId=%s&width=420&height=420&format=png", tostring(game.Players.LocalPlayer.UserId)),
                 }, {
                     New("UICorner", {
@@ -1887,7 +1899,6 @@ Components.TitleBar = (function()
                 New("Frame", {
                     BackgroundTransparency = 1,
                     Size = UDim2.new(0, 320, 0, 28),
-                    ZIndex = 6,
                 }, {
                     New("UIListLayout", {
                         FillDirection = Enum.FillDirection.Horizontal,
@@ -1907,7 +1918,6 @@ Components.TitleBar = (function()
                         TextXAlignment = Enum.TextXAlignment.Left,
                         TextYAlignment = Enum.TextYAlignment.Center,
                         AutomaticSize = Enum.AutomaticSize.X,
-                        ZIndex = 6,
                     }),
                     hasSubtitle and New("TextLabel", {
                         Text = Config.SubTitle,
@@ -1922,7 +1932,6 @@ Components.TitleBar = (function()
                         TextXAlignment = Enum.TextXAlignment.Left,
                         TextYAlignment = Enum.TextYAlignment.Center,
                         AutomaticSize = Enum.AutomaticSize.X,
-                        ZIndex = 6,
                     }) or nil,
                 }),
             }),
@@ -1930,7 +1939,6 @@ Components.TitleBar = (function()
                 BackgroundTransparency = 0,
                 Size = UDim2.new(1, 0, 0, 1),
                 Position = UDim2.new(0, 0, 1, 0),
-                ZIndex = 6,
                 ThemeTag = {
                     BackgroundColor3 = "TitleBarLine"
                 },
@@ -1941,7 +1949,6 @@ Components.TitleBar = (function()
             Library.Window:Dialog({
                 Title = "Lucid",
                 Content = "Are you sure you want to close?",
-                ZIndex = math.huge,
                 Buttons = {
                     {
                         Title = "Cancel"
