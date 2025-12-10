@@ -1860,11 +1860,13 @@ Components.TitleBar = (function()
             Size = UDim2.new(1, 0, 0, 48),
             BackgroundTransparency = 1,
             Parent = Config.Parent,
+            ZIndex = 6,
         }, {
             New("Frame", {
                 Size = UDim2.new(1, - 20, 1, 0),
                 Position = UDim2.new(0, 16, 0, 0),
                 BackgroundTransparency = 1,
+                ZIndex = 6,
             }, {
                 New("UIListLayout", {
                     Padding = UDim.new(0, 10),
@@ -1875,6 +1877,7 @@ Components.TitleBar = (function()
                 New("ImageLabel", {
                     Size = UDim2.new(0, 32, 0, 32),
                     BackgroundTransparency = 1,
+                    ZIndex = 6,
                     Image = string.format("https://www.roblox.com/headshot-thumbnail/image?userId=%s&width=420&height=420&format=png", tostring(game.Players.LocalPlayer.UserId)),
                 }, {
                     New("UICorner", {
@@ -1884,6 +1887,7 @@ Components.TitleBar = (function()
                 New("Frame", {
                     BackgroundTransparency = 1,
                     Size = UDim2.new(0, 320, 0, 28),
+                    ZIndex = 6,
                 }, {
                     New("UIListLayout", {
                         FillDirection = Enum.FillDirection.Horizontal,
@@ -1903,6 +1907,7 @@ Components.TitleBar = (function()
                         TextXAlignment = Enum.TextXAlignment.Left,
                         TextYAlignment = Enum.TextYAlignment.Center,
                         AutomaticSize = Enum.AutomaticSize.X,
+                        ZIndex = 6,
                     }),
                     hasSubtitle and New("TextLabel", {
                         Text = Config.SubTitle,
@@ -1917,6 +1922,7 @@ Components.TitleBar = (function()
                         TextXAlignment = Enum.TextXAlignment.Left,
                         TextYAlignment = Enum.TextYAlignment.Center,
                         AutomaticSize = Enum.AutomaticSize.X,
+                        ZIndex = 6,
                     }) or nil,
                 }),
             }),
@@ -1924,6 +1930,7 @@ Components.TitleBar = (function()
                 BackgroundTransparency = 0,
                 Size = UDim2.new(1, 0, 0, 1),
                 Position = UDim2.new(0, 0, 1, 0),
+                ZIndex = 6,
                 ThemeTag = {
                     BackgroundColor3 = "TitleBarLine"
                 },
@@ -1946,7 +1953,7 @@ Components.TitleBar = (function()
                     },
                 },
             })
-        end, 20)
+        end)
 
         TitleBar.MaxButton = BarButton(Components.Assets.Max, UDim2.new(1, - 44, 0, 6), TitleBar.Frame, function()
             Config.Window.Maximize(not Config.Window.Maximized)
