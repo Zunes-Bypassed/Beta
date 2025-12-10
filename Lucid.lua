@@ -1991,8 +1991,6 @@ Components.Window = (function()
         
         Window.AcrylicPaint = Acrylic.AcrylicPaint()
         
-        -- [ĐÃ XÓA] Vignette tại đây
-        
         local ResizeStartFrame = New("Frame", {
             Size = UDim2.fromOffset(18, 18),
             BackgroundTransparency = 1,
@@ -2056,13 +2054,12 @@ Components.Window = (function()
             Window.ContainerHolder
         })
         
-        -- [MỚI] Thanh gạch chia (Divider)
         local TabSeparator = New("Frame", {
             Name = "Separator",
-            Size = UDim2.new(0, 1, 1, - 100), -- Chiều cao khớp với Container
-            Position = UDim2.fromOffset(Window.TabWidth + 20, 88), -- Nằm giữa Tab và Container
+            Size = UDim2.new(0, 1, 1, - 52),
+            Position = UDim2.fromOffset(Window.TabWidth + 20, 52),
             BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-            BackgroundTransparency = 0.9, -- Mờ nhẹ để tinh tế
+            BackgroundTransparency = 0.9,
             BorderSizePixel = 0,
             ZIndex = 5,
         })
@@ -2079,7 +2076,7 @@ Components.Window = (function()
             Window.ContainerCanvas,
             TabFrame,
             ResizeStartFrame,
-            TabSeparator, -- Thêm thanh gạch vào Window
+            TabSeparator,
         })
         
         Window.TitleBar = Components.TitleBar({
@@ -2108,8 +2105,6 @@ Components.Window = (function()
         Window.ContainerPosMotor = Flipper.SingleMotor.new(94)
         
         local OpenMotor = Flipper.SingleMotor.new(0)
-
-        -- [ĐÃ XÓA] OpenMotor:onStep cho Vignette vì không còn dùng nữa
 
         OpenMotor:setGoal(Spring(1, {
             frequency = 4,
@@ -2259,7 +2254,6 @@ Components.Window = (function()
             if Library.UseAcrylic then
                 Window.AcrylicPaint.Model:Destroy()
             end
-            -- [ĐÃ XÓA] Vignette:Destroy()
             Window.Root:Destroy()
         end
         
