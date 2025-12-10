@@ -1482,6 +1482,8 @@ Components.Dialog = (function()
         function NewDialog:Button(Title, Callback)
             NewDialog.Buttons += 1
             local Button = Components.Button("", NewDialog.ButtonHolder, true)
+            Button.Frame.ZIndex = 7
+            Button.Title.ZIndex = 7
             Button.Title.Text = Title or "Button"
             Creator.AddSignal(Button.Frame.MouseButton1Click, function()
                 Library:SafeCallback(Callback or function()
