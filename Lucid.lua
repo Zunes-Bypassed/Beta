@@ -2056,8 +2056,8 @@ Components.Window = (function()
         
         local TabSeparator = New("Frame", {
             Name = "Separator",
-            Size = UDim2.new(0, 1, 1, - 52),
-            Position = UDim2.fromOffset(Window.TabWidth + 20, 52),
+            Size = UDim2.new(0, 1, 1, - 45), 
+            Position = UDim2.fromOffset(Window.TabWidth + 20, 45), 
             BackgroundColor3 = Color3.fromRGB(255, 255, 255),
             BackgroundTransparency = 0.9,
             BorderSizePixel = 0,
