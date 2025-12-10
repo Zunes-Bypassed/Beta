@@ -2803,6 +2803,7 @@ ElementsTable.Dropdown = (function()
         Dropdown.SetDesc = DropdownFrame.SetDesc
         Dropdown.Visible = DropdownFrame.Visible
         Dropdown.Elements = DropdownFrame
+        
         local DropdownDisplay = New("TextLabel", {
             FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
             Text = "Value",
@@ -2852,9 +2853,11 @@ ElementsTable.Dropdown = (function()
             DropdownIco,
             DropdownDisplay,
         })
+        
         local DropdownListLayout = New("UIListLayout", {
             Padding = UDim.new(0, 3)
         })
+        
         local DropdownScrollFrame = New("ScrollingFrame", {
             Size = UDim2.new(1, - 5, 1, - 10),
             Position = UDim2.fromOffset(5, 5),
@@ -2871,6 +2874,7 @@ ElementsTable.Dropdown = (function()
         }, {
             DropdownListLayout
         })
+
         local DropdownHolderFrame = New("Frame", {
             Size = UDim2.fromScale(1, 0.6),
             ThemeTag = {
@@ -2898,6 +2902,7 @@ ElementsTable.Dropdown = (function()
                 ImageTransparency = 0.1,
             }),
         })
+
         local DropdownHolderCanvas = New("Frame", {
             BackgroundTransparency = 1,
             Size = UDim2.fromOffset(170, 300),
@@ -2911,32 +2916,32 @@ ElementsTable.Dropdown = (function()
             }),
         })
         table.insert(Library.OpenFrames, DropdownHolderCanvas)
+
         local function RecalculateListPositionAndSize()
-            local viewportX, viewportY = Camera.ViewportSize.X, Camera.ViewportSize.Y
-            local absPos = DropdownInner.AbsolutePosition
-            local absSize = DropdownInner.AbsoluteSize
+            local MainGUI = Library.GUI
+            if not MainGUI then return end
+
+            local btnPos = DropdownInner.AbsolutePosition
+            local btnSize = DropdownInner.AbsoluteSize
+            
+            local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y - 10
+            
+            local listStartY = btnPos.Y + btnSize.Y
+            
+            local spaceBelow = windowBottom - listStartY
+            
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
-            local guiFrame = Library.GUI
-            local frameTop, frameBottom
-            if guiFrame then
-                frameTop = guiFrame.AbsolutePosition.Y
-                frameBottom = guiFrame.AbsolutePosition.Y + guiFrame.AbsoluteSize.Y
-            else
-                frameTop = 0
-                frameBottom = viewportY
-            end
-            local spaceBelow = frameBottom - (absPos.Y + absSize.Y)
+            
             local finalHeight = math.min(contentHeight, spaceBelow)
-            local finalY = absPos.Y + absSize.Y
-            if finalY + finalHeight > frameBottom then
-                finalHeight = frameBottom - finalY
-            end
-            local finalX = math.clamp(absPos.X - 1, 0, viewportX - DropdownHolderFrame.AbsoluteSize.X)
-            DropdownHolderCanvas.Position = UDim2.fromOffset(finalX, finalY)
+            
+            if finalHeight < 0 then finalHeight = 0 end
+
+            DropdownHolderCanvas.Position = UDim2.fromOffset(btnPos.X, listStartY)
             DropdownHolderFrame.Size = UDim2.new(1, 0, 0, finalHeight)
-            DropdownScrollFrame.Size = UDim2.new(1, 0, 1, - 10)
+            
             DropdownScrollFrame.CanvasSize = UDim2.fromOffset(0, DropdownListLayout.AbsoluteContentSize.Y)
         end
+
         function Dropdown:GetActiveValues()
             if self.Multi then
                 local count = 0
@@ -2950,10 +2955,12 @@ ElementsTable.Dropdown = (function()
                 return self.Value and 1 or 0
             end
         end
+
         Creator.AddSignal(DropdownInner:GetPropertyChangedSignal("AbsolutePosition"), RecalculateListPositionAndSize)
         Creator.AddSignal(DropdownInner.MouseButton1Click, function()
             Dropdown:Open()
         end)
+        
         Creator.AddSignal(UserInputService.InputBegan, function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
                 local AbsPos, AbsSize = DropdownHolderFrame.AbsolutePosition, DropdownHolderFrame.AbsoluteSize
@@ -2962,6 +2969,7 @@ ElementsTable.Dropdown = (function()
                 end
             end
         end)
+
         local ScrollFrame = self.ScrollFrame
         function Dropdown:Open()
             if Library.CurrentOpenDropdown and Library.CurrentOpenDropdown ~= Dropdown then
@@ -2973,6 +2981,7 @@ ElementsTable.Dropdown = (function()
             DropdownHolderCanvas.Visible = true
             task.defer(RecalculateListPositionAndSize)
         end
+
         function Dropdown:Close()
             if Library.CurrentOpenDropdown == Dropdown then
                 Library.CurrentOpenDropdown = nil
@@ -2981,6 +2990,7 @@ ElementsTable.Dropdown = (function()
             ScrollFrame.ScrollingEnabled = true
             DropdownHolderCanvas.Visible = false
         end
+
         function Dropdown:Display()
             local Values = Dropdown.Values
             local Str = ""
@@ -2996,6 +3006,7 @@ ElementsTable.Dropdown = (function()
             end
             DropdownDisplay.Text = (Str == "" and "---" or Str)
         end
+
         function Dropdown:BuildDropdownList()
             local Values = Dropdown.Values
             local Buttons = {}
@@ -3129,6 +3140,7 @@ ElementsTable.Dropdown = (function()
     end
     return Element
 end)()
+
 ElementsTable.Paragraph = (function()
     local Paragraph = {}
     Paragraph.__index = Paragraph
