@@ -2062,8 +2062,6 @@ Components.Window = (function()
             Position = UDim2.fromOffset(Window.TabWidth + 20, 49),
             ThemeTag = { BackgroundColor3 = "Separator" },
             BackgroundTransparency = 0,
-            BorderSizePixel = 0,
-            ZIndex = 5,
         })
 
         Window.Root = New("Frame", {
