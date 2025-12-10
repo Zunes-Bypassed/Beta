@@ -2927,26 +2927,16 @@ ElementsTable.Dropdown = (function()
             local padding = 5
             
             local listX = btnPos.X - boxWidth - padding
-            
             local listY = btnPos.Y 
             
-            local windowY = MainGUI.AbsolutePosition.Y
-            local windowHeight = MainGUI.AbsoluteSize.Y
-            
-            local titleBarBottom = windowY + 52
-            
-            if listY < titleBarBottom then
-                listY = titleBarBottom
-            end
-            
-            local windowBottom = windowY + windowHeight
-            local spaceBelow = windowBottom - listY - 5 
+            local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y
+            local spaceBelow = windowBottom - listY - 5
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
             local finalHeight = contentHeight
             if finalHeight > spaceBelow then
-                finalHeight = math.max(spaceBelow, 0)
+                finalHeight = math.max(spaceBelow, 50)
             end
 
             DropdownHolderCanvas.Position = UDim2.fromOffset(listX, listY)
