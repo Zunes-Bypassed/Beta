@@ -1797,7 +1797,7 @@ Components.TitleBar = (function()
     return function(Config)
         local TitleBar = {}
 
-        local function BarButton(Icon, Pos, Parent, Callback)
+        local function BarButton(Icon, Pos, Parent, Callback, ZIndex)
             local Button = {
                 Callback = Callback or function()
                 end
@@ -1810,6 +1810,7 @@ Components.TitleBar = (function()
                 Parent = Parent,
                 Position = Pos,
                 Text = "",
+                ZIndex = ZIndex or 1,
             }, {
                 New("UICorner", {
                     CornerRadius = UDim.new(0, 8)
@@ -1821,6 +1822,7 @@ Components.TitleBar = (function()
                     AnchorPoint = Vector2.new(0.5, 0.5),
                     BackgroundTransparency = 1,
                     Name = "Icon",
+                    ZIndex = ZIndex or 1,
                     ThemeTag = {
                         ImageColor3 = "Text"
                     },
@@ -1944,7 +1946,7 @@ Components.TitleBar = (function()
                     },
                 },
             })
-        end)
+        end, 20)
 
         TitleBar.MaxButton = BarButton(Components.Assets.Max, UDim2.new(1, - 44, 0, 6), TitleBar.Frame, function()
             Config.Window.Maximize(not Config.Window.Maximized)
@@ -2062,6 +2064,8 @@ Components.Window = (function()
             Position = UDim2.fromOffset(Window.TabWidth + 20, 49),
             ThemeTag = { BackgroundColor3 = "Separator" },
             BackgroundTransparency = 0,
+            BorderSizePixel = 0,
+            ZIndex = 5,
         })
 
         Window.Root = New("Frame", {
