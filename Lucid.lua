@@ -1941,7 +1941,7 @@ Components.TitleBar = (function()
             Library.Window:Dialog({
                 Title = "Lucid",
                 Content = "Are you sure you want to close?",
-                ZIndex = 200,
+                ZIndex = math.huge,
                 Buttons = {
                     {
                         Title = "Cancel"
