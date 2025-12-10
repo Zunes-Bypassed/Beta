@@ -2927,12 +2927,13 @@ ElementsTable.Dropdown = (function()
             local padding = 5
             
             local listX = btnPos.X - boxWidth - padding
+            
             local listY = btnPos.Y 
             
             local windowY = MainGUI.AbsolutePosition.Y
             local windowHeight = MainGUI.AbsoluteSize.Y
             
-            local titleBarBottom = windowY + 50 
+            local titleBarBottom = windowY + 52
             
             if listY < titleBarBottom then
                 listY = titleBarBottom
