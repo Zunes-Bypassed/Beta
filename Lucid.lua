@@ -1406,7 +1406,6 @@ Components.Dialog = (function()
             BackgroundColor3 = Color3.fromRGB(0, 0, 0),
             BackgroundTransparency = 1,
             AutoButtonColor = false,
-            ZIndex = 6,
             Parent = Dialog.Window.Root,
         })
         local TintMotor, TintTransparency = Creator.SpringMotor(1, NewDialog.TintFrame, "BackgroundTransparency", true)
@@ -1415,7 +1414,6 @@ Components.Dialog = (function()
             AnchorPoint = Vector2.new(0.5, 0.5),
             Position = UDim2.fromScale(0.5, 0.5),
             GroupTransparency = 1,
-            ZIndex = 6,
             Parent = NewDialog.TintFrame,
             ThemeTag = {
                 BackgroundColor3 = "Dialog"
@@ -1440,7 +1438,6 @@ Components.Dialog = (function()
             Size = UDim2.new(1, - 40, 0, 24),
             Position = UDim2.fromOffset(20, 18),
             BackgroundTransparency = 1,
-            ZIndex = 6,
             ThemeTag = {
                 TextColor3 = "Text"
             },
@@ -1451,7 +1448,6 @@ Components.Dialog = (function()
             AnchorPoint = Vector2.new(0.5, 1),
             Position = UDim2.new(0.5, 0, 1, - 15),
             BackgroundTransparency = 1,
-            ZIndex = 6,
             Parent = NewDialog.Root,
         }, {
             New("UIGridLayout", {
@@ -1482,8 +1478,6 @@ Components.Dialog = (function()
         function NewDialog:Button(Title, Callback)
             NewDialog.Buttons += 1
             local Button = Components.Button("", NewDialog.ButtonHolder, true)
-            Button.Frame.ZIndex = 7
-            Button.Title.ZIndex = 7
             Button.Title.Text = Title or "Button"
             Creator.AddSignal(Button.Frame.MouseButton1Click, function()
                 Library:SafeCallback(Callback or function()
@@ -1496,7 +1490,6 @@ Components.Dialog = (function()
     end
     return Dialog
 end)()
-
 Components.Notification = (function()
     local Spring = Flipper.Spring.new
     local New = Creator.New
@@ -2070,7 +2063,6 @@ Components.Window = (function()
             ThemeTag = { BackgroundColor3 = "Separator" },
             BackgroundTransparency = 0,
             BorderSizePixel = 0,
-            ZIndex = 5,
         })
 
         Window.Root = New("Frame", {
