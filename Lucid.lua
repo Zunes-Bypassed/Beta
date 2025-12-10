@@ -2867,7 +2867,7 @@ ElementsTable.Dropdown = (function()
             TopImage = "rbxassetid://6276641225",
             ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255),
             ScrollBarImageTransparency = 0.75,
-            ScrollBarThickness = 5,
+            ScrollBarThickness = 0,
             BorderSizePixel = 0,
             CanvasSize = UDim2.fromScale(0, 0),
             ScrollingDirection = Enum.ScrollingDirection.Y,
@@ -2924,17 +2924,18 @@ ElementsTable.Dropdown = (function()
             local btnPos = DropdownInner.AbsolutePosition
             local btnSize = DropdownInner.AbsoluteSize
             
-            local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y - 10
+            local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y
             
             local listStartY = btnPos.Y + btnSize.Y
             
-            local spaceBelow = windowBottom - listStartY
+            local spaceBelow = windowBottom - listStartY - 2
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
-            local finalHeight = math.min(contentHeight, spaceBelow)
-            
-            if finalHeight < 0 then finalHeight = 0 end
+            local finalHeight = contentHeight
+            if finalHeight > spaceBelow then
+                finalHeight = math.max(spaceBelow, 50)
+            end
 
             DropdownHolderCanvas.Position = UDim2.fromOffset(btnPos.X, listStartY)
             DropdownHolderFrame.Size = UDim2.new(1, 0, 0, finalHeight)
@@ -3090,13 +3091,9 @@ ElementsTable.Dropdown = (function()
                 Dropdown:Display()
                 Buttons[Button] = Table
             end
-            local ListSizeX = 0
-            for Button, Table in next, Buttons do
-                if Button.ButtonLabel then
-                    ListSizeX = math.max(ListSizeX, Button.ButtonLabel.TextBounds.X)
-                end
-            end
-            DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX + 30, DropdownHolderCanvas.Size.Y.Offset)
+            
+            DropdownHolderCanvas.Size = UDim2.fromOffset(170, DropdownHolderCanvas.Size.Y.Offset)
+            
             task.defer(RecalculateListPositionAndSize)
         end
         function Dropdown:SetValues(NewValues)
