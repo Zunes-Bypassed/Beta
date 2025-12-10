@@ -1400,26 +1400,23 @@ Components.Dialog = (function()
         local NewDialog = {
             Buttons = 0
         }
-        
         NewDialog.TintFrame = New("TextButton", {
             Text = "",
             Size = UDim2.fromScale(1, 1),
             BackgroundColor3 = Color3.fromRGB(0, 0, 0),
             BackgroundTransparency = 1,
             AutoButtonColor = false,
-            Parent = Dialog.Window.Root,
             ZIndex = 6,
+            Parent = Dialog.Window.Root,
         })
-        
         local TintMotor, TintTransparency = Creator.SpringMotor(1, NewDialog.TintFrame, "BackgroundTransparency", true)
-        
         NewDialog.Root = New("CanvasGroup", {
             Size = UDim2.fromOffset(340, 180),
             AnchorPoint = Vector2.new(0.5, 0.5),
             Position = UDim2.fromScale(0.5, 0.5),
             GroupTransparency = 1,
-            Parent = NewDialog.TintFrame,
             ZIndex = 6,
+            Parent = NewDialog.TintFrame,
             ThemeTag = {
                 BackgroundColor3 = "Dialog"
             },
@@ -1435,7 +1432,6 @@ Components.Dialog = (function()
                 },
             }),
         })
-        
         NewDialog.Title = New("TextLabel", {
             Text = "Dialog",
             FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.SemiBold),
@@ -1444,20 +1440,19 @@ Components.Dialog = (function()
             Size = UDim2.new(1, - 40, 0, 24),
             Position = UDim2.fromOffset(20, 18),
             BackgroundTransparency = 1,
+            ZIndex = 6,
             ThemeTag = {
                 TextColor3 = "Text"
             },
             Parent = NewDialog.Root,
-            ZIndex = 6,
         })
-        
         NewDialog.ButtonHolder = New("Frame", {
             Size = UDim2.new(1, - 40, 0, 36),
             AnchorPoint = Vector2.new(0.5, 1),
             Position = UDim2.new(0.5, 0, 1, - 15),
             BackgroundTransparency = 1,
-            Parent = NewDialog.Root,
             ZIndex = 6,
+            Parent = NewDialog.Root,
         }, {
             New("UIGridLayout", {
                 CellPadding = UDim2.new(0, 10, 0, 0),
@@ -1467,15 +1462,12 @@ Components.Dialog = (function()
                 SortOrder = Enum.SortOrder.LayoutOrder,
             }),
         })
-        
         NewDialog.Scale = New("UIScale", {
             Scale = 1.05,
             Parent = NewDialog.Root
         })
-        
         local RootMotor, RootTransparency = Creator.SpringMotor(1, NewDialog.Root, "GroupTransparency")
         local ScaleMotor, SetScale = Creator.SpringMotor(1.05, NewDialog.Scale, "Scale")
-        
         function NewDialog:Open()
             Library.DialogOpen = true
             NewDialog.Scale.Scale = 1.08
@@ -1483,17 +1475,14 @@ Components.Dialog = (function()
             RootTransparency(0)
             SetScale(1)
         end
-        
         function NewDialog:Close()
             Library.DialogOpen = false
             NewDialog.TintFrame:Destroy()
         end
-        
         function NewDialog:Button(Title, Callback)
             NewDialog.Buttons += 1
-            local Button = Components.Button("", NewDialog.ButtonHolder, true) 
+            local Button = Components.Button("", NewDialog.ButtonHolder, true)
             Button.Title.Text = Title or "Button"
-            
             Creator.AddSignal(Button.Frame.MouseButton1Click, function()
                 Library:SafeCallback(Callback or function()
                 end)
@@ -1501,7 +1490,6 @@ Components.Dialog = (function()
             end)
             return Button
         end
-        
         return NewDialog
     end
     return Dialog
