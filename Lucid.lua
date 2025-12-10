@@ -2007,6 +2007,7 @@ Components.Window = (function()
             BorderSizePixel = 0,
             CanvasSize = UDim2.fromScale(0, 0),
             ScrollingDirection = Enum.ScrollingDirection.Y,
+            ZIndex = 2,
         }, {
             New("UIListLayout", {
                 Padding = UDim.new(0, 6)
@@ -2020,6 +2021,36 @@ Components.Window = (function()
             ClipsDescendants = true,
         }, {
             Window.TabHolder,
+        })
+        
+        Window.Selector = New("Frame", {
+            Size = UDim2.new(1, - 24, 0, 32),
+            Position = UDim2.fromOffset(12, 0),
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            BackgroundTransparency = 0.9,
+            Parent = TabFrame,
+            ZIndex = 1,
+        }, {
+            New("UICorner", {
+                CornerRadius = UDim.new(0, 12) 
+            }),
+            New("UIStroke", {
+                Color = Color3.fromRGB(255, 255, 255),
+                Transparency = 0.6,
+                Thickness = 1,
+            }),
+            New("UIGradient", {
+                Rotation = 45,
+                Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+                    ColorSequenceKeypoint.new(1, Color3.fromRGB(220, 220, 250))
+                }),
+                Transparency = NumberSequence.new({
+                    NumberSequenceKeypoint.new(0, 0.6),
+                    NumberSequenceKeypoint.new(0.5, 0.9),
+                    NumberSequenceKeypoint.new(1, 0.6)
+                })
+            })
         })
         
         Window.TabDisplay = New("TextLabel", {
@@ -2119,8 +2150,14 @@ Components.Window = (function()
             Window.Root.Position = UDim2.new(0, values.X, 0, values.Y)
         end)
         
-        Window.SelectorSizeMotor:onStep(function(Value)
+        Window.SelectorPosMotor:onStep(function(Value)
+            Window.Selector.Position = UDim2.fromOffset(12, Value)
         end)
+        
+        Window.SelectorSizeMotor:onStep(function(Value)
+            Window.Selector.Size = UDim2.new(1, -24, 0, 32 + Value)
+        end)
+        
         Window.ContainerBackMotor:onStep(function(Value)
             Window.ContainerAnim.GroupTransparency = Value
         end)
