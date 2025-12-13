@@ -2916,27 +2916,38 @@ ElementsTable.Dropdown = (function()
         })
         table.insert(Library.OpenFrames, DropdownHolderCanvas)
 
+        local function GetWindowRoot()
+            local current = DropdownInner
+            while current.Parent and not current.Parent:IsA("ScreenGui") do
+                current = current.Parent
+            end
+            return current
+        end
+
         local function RecalculateListPositionAndSize()
-            local MainGUI = Library.GUI
-            if not MainGUI then return end
+            local WindowRoot = GetWindowRoot()
+            if not WindowRoot then return end
 
             local btnPos = DropdownInner.AbsolutePosition
-            local listX = btnPos.X - 175
+            
+            local boxWidth = 170
+            local padding = 5
+            
+            local listX = btnPos.X - boxWidth - padding
             local listY = btnPos.Y 
             
-            local windowY = MainGUI.AbsolutePosition.Y
-            local windowHeight = MainGUI.AbsoluteSize.Y
+            local rootY = WindowRoot.AbsolutePosition.Y
+            local rootHeight = WindowRoot.AbsoluteSize.Y
             
-            local titleBarBottom = windowY + 52
+            local titleBarBottom = rootY + 52
             
             if listY < titleBarBottom then
                 listY = titleBarBottom
             end
             
-            local windowBottom = windowY + windowHeight
-            local paddingBottom = 5
+            local windowBottom = rootY + rootHeight
             
-            local maxAvailableHeight = windowBottom - listY - paddingBottom
+            local maxAvailableHeight = windowBottom - listY - 5
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
