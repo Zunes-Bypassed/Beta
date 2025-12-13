@@ -20,6 +20,13 @@ local Themes = {
     Dark = {  
         Name = "Dark",
         Accent = Color3.fromRGB(240, 240, 255), 
+        AcrylicMain = Color3.fromRGB(10, 10, 15),
+        AcrylicBorder = Color3.fromRGB(50, 50, 60),
+        AcrylicGradient = ColorSequence.new{  
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(5, 5, 8)),  
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 25, 35)) 
+        },  
+        AcrylicNoise = 1,
         TitleBarLine = Color3.fromRGB(60, 60, 70),
         Tab = Color3.fromRGB(200, 200, 200),
         Element = Color3.fromRGB(20, 20, 25),
@@ -55,6 +62,13 @@ local Themes = {
     Light = {
         Name = "Light",
         Accent = Color3.fromRGB(20, 20, 20),
+        AcrylicMain = Color3.fromRGB(245, 245, 250),
+        AcrylicBorder = Color3.fromRGB(220, 220, 230),
+        AcrylicGradient = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(235, 235, 245)),
+        },
+        AcrylicNoise = 1,
         TitleBarLine = Color3.fromRGB(210, 210, 220),
         Tab = Color3.fromRGB(100, 100, 100),
         Element = Color3.fromRGB(255, 255, 255),
@@ -92,6 +106,8 @@ local Library = {
     OpenFrames = {},
     Options = {},
     Themes = Themes.Names,
+    Window = nil,
+    WindowFrame = nil,
     Unloaded = false,
     Creator = nil,
     DialogOpen = false,
@@ -2648,7 +2664,7 @@ Components.Window = (function()
 
         return Window
     end
-end)() 
+end)()
 
 local ElementsTable = {}
 local AddSignal = Creator.AddSignal
