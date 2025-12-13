@@ -475,7 +475,7 @@ local Flipper = {
     isMotor = isMotor,
 }
 
-Local Creator = {
+local Creator = {
     Registry = {},
     Signals = {},
     TransparencyMotors = {},
