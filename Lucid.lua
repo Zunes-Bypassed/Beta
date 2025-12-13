@@ -55,7 +55,7 @@ local Themes = {
         SubText = Color3.fromRGB(180, 180, 190),
         ImageColor = Color3.fromRGB(255, 255, 255),
         Hover = Color3.fromRGB(255, 255, 255),
-        Separator = Color3.fromRGB(255, 255, 255),
+        Separator = Color3.fromRGB(60, 60, 70),
         HoverChange = 0.15 
     },  
 
@@ -96,7 +96,7 @@ local Themes = {
         Text = Color3.fromRGB(20, 20, 20),
         ImageColor = Color3.fromRGB(20, 20, 20),
         SubText = Color3.fromRGB(120, 120, 130),
-        Separator = Color3.fromRGB(200, 200, 200),
+        Separator = Color3.fromRGB(210, 210, 220),
         Hover = Color3.fromRGB(100, 100, 100),
         HoverChange = 0.08
     }
@@ -2064,6 +2064,16 @@ Components.Window = (function()
             BackgroundTransparency = 0
         })
 
+        Window.BackgroundImage = New("ImageLabel", {
+            Name = "Background",
+            Size = UDim2.fromScale(1, 1),
+            Position = UDim2.fromScale(0, 0),
+            Image = "rbxassetid://106023436512699",
+            BackgroundTransparency = 1,
+            ScaleType = Enum.ScaleType.Crop,
+            ZIndex = 0
+        })
+
         Window.Root = New("Frame", {
             Size = Window.Size,
             Position = Window.Position,
@@ -2071,6 +2081,7 @@ Components.Window = (function()
             Parent = Config.Parent,
             ClipsDescendants = false, 
         }, {
+            Window.BackgroundImage,
             Window.AcrylicPaint.Frame,
             Window.TabDisplay,
             Window.ContainerCanvas,
