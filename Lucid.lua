@@ -2917,47 +2917,43 @@ ElementsTable.Dropdown = (function()
         table.insert(Library.OpenFrames, DropdownHolderCanvas)
 
         local function GetWindowRoot()
-            local current = DropdownInner
-            while current.Parent and not current.Parent:IsA("ScreenGui") do
-                current = current.Parent
+            local Obj = DropdownInner
+            while Obj and Obj.Parent and not Obj.Parent:IsA("ScreenGui") do
+                Obj = Obj.Parent
             end
-            return current
+            return Obj
         end
 
         local function RecalculateListPositionAndSize()
             local WindowRoot = GetWindowRoot()
             if not WindowRoot then return end
 
+            local rootPos = WindowRoot.AbsolutePosition
+            local rootSize = WindowRoot.AbsoluteSize
             local btnPos = DropdownInner.AbsolutePosition
             
             local boxWidth = 170
             local padding = 5
             
             local listX = btnPos.X - boxWidth - padding
-            local listY = btnPos.Y 
             
-            local rootY = WindowRoot.AbsolutePosition.Y
-            local rootHeight = WindowRoot.AbsoluteSize.Y
+            local titleBarBottom = rootPos.Y + 54 
+            local windowBottom = rootPos.Y + rootSize.Y - 5
             
-            local titleBarBottom = rootY + 52
+            local listY = btnPos.Y
             
             if listY < titleBarBottom then
                 listY = titleBarBottom
             end
             
-            local windowBottom = rootY + rootHeight
-            
-            local maxAvailableHeight = windowBottom - listY - 5
-            
+            local maxAvailableHeight = windowBottom - listY
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
-            
             local finalHeight = math.min(contentHeight, maxAvailableHeight)
             
             if finalHeight < 0 then finalHeight = 0 end
 
             DropdownHolderCanvas.Position = UDim2.fromOffset(listX, listY)
             DropdownHolderFrame.Size = UDim2.new(1, 0, 0, finalHeight)
-            
             DropdownScrollFrame.CanvasSize = UDim2.fromOffset(0, DropdownListLayout.AbsoluteContentSize.Y)
         end
 
