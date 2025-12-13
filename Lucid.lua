@@ -556,16 +556,6 @@ local Creator = {
             BorderColor3 = Color3.new(0, 0, 0),
             BorderSizePixel = 0,
         },
-        BackgroundImage = {
-            Name = "Background",
-            Class = "ImageLabel",
-            Image = "rbxassetid://106023436512699",
-            Size = UDim2.fromScale(1, 1),
-            BackgroundTransparency = 1,
-            ScaleType = Enum.ScaleType.Crop,
-            Position = UDim2.fromScale(0, 0),
-            ZIndex = 0,
-        },
     },
 }
 
@@ -2934,7 +2924,7 @@ ElementsTable.Dropdown = (function()
             local boxWidth = 170
             local padding = 5
             
-            local listX = btnPos.X - boxWidth - padding
+            local listX = btnPos.X + DropdownInner.AbsoluteSize.X + padding
             local listY = btnPos.Y 
             
             local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y
