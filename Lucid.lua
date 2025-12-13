@@ -2924,20 +2924,30 @@ ElementsTable.Dropdown = (function()
             local boxWidth = 170
             local padding = 5
             
-            local listX = btnPos.X + DropdownInner.AbsoluteSize.X + padding
-            local listY = btnPos.Y 
+            local listX = btnPos.X - boxWidth - padding
             
-            local windowBottom = MainGUI.AbsolutePosition.Y + MainGUI.AbsoluteSize.Y
-            local spaceBelow = windowBottom - listY - 5
+            local windowY = MainGUI.AbsolutePosition.Y
+            local windowHeight = MainGUI.AbsoluteSize.Y
+            local titleBarBottom = windowY + 52 
+            local windowBottom = windowY + windowHeight - 10
+            
+            local maxAvailableHeight = windowBottom - titleBarBottom
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
-            local finalHeight = contentHeight
-            if finalHeight > spaceBelow then
-                finalHeight = math.max(spaceBelow, 50)
+            local finalHeight = math.min(contentHeight, maxAvailableHeight)
+            
+            local finalY = btnPos.Y
+            
+            if finalY + finalHeight > windowBottom then
+                finalY = windowBottom - finalHeight
+            end
+            
+            if finalY < titleBarBottom then
+                finalY = titleBarBottom
             end
 
-            DropdownHolderCanvas.Position = UDim2.fromOffset(listX, listY)
+            DropdownHolderCanvas.Position = UDim2.fromOffset(listX, finalY)
             DropdownHolderFrame.Size = UDim2.new(1, 0, 0, finalHeight)
             
             DropdownScrollFrame.CanvasSize = UDim2.fromOffset(0, DropdownListLayout.AbsoluteContentSize.Y)
@@ -3137,6 +3147,7 @@ ElementsTable.Dropdown = (function()
     end
     return Element
 end)()
+
 
 ElementsTable.Paragraph = (function()
     local Paragraph = {}
