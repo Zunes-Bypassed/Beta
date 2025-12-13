@@ -2777,6 +2777,7 @@ ElementsTable.Toggle = (function()
     end
     return Element
 end)()
+
 ElementsTable.Dropdown = (function()
     local Element = {}
     Element.__index = Element
@@ -2932,12 +2933,14 @@ ElementsTable.Dropdown = (function()
                 listY = titleBarBottom
             end
             
-            local windowBottom = windowY + windowHeight - 5
-            local availableHeight = windowBottom - listY
+            local windowBottom = windowY + windowHeight
+            local paddingBottom = 5
+            
+            local maxAvailableHeight = windowBottom - listY - paddingBottom
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
-            local finalHeight = math.min(contentHeight, availableHeight)
+            local finalHeight = math.min(contentHeight, maxAvailableHeight)
             
             if finalHeight < 0 then finalHeight = 0 end
 
