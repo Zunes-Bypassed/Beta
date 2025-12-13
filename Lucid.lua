@@ -92,8 +92,6 @@ local Library = {
     OpenFrames = {},
     Options = {},
     Themes = Themes.Names,
-    Window = nil,
-    WindowFrame = nil,
     Unloaded = false,
     Creator = nil,
     DialogOpen = false,
@@ -477,7 +475,7 @@ local Flipper = {
     isMotor = isMotor,
 }
 
-local Creator = {
+Local Creator = {
     Registry = {},
     Signals = {},
     TransparencyMotors = {},
@@ -541,6 +539,16 @@ local Creator = {
             BackgroundColor3 = Color3.new(1, 1, 1),
             BorderColor3 = Color3.new(0, 0, 0),
             BorderSizePixel = 0,
+        },
+        BackgroundImage = {
+            Name = "Background",
+            Class = "ImageLabel",
+            Image = "rbxassetid://106023436512699",
+            Size = UDim2.fromScale(1, 1),
+            BackgroundTransparency = 1,
+            ScaleType = Enum.ScaleType.Crop,
+            Position = UDim2.fromScale(0, 0),
+            ZIndex = 0,
         },
     },
 }
@@ -2050,16 +2058,6 @@ Components.Window = (function()
             BackgroundTransparency = 0
         })
 
-        Window.BackgroundImage = New("ImageLabel", {
-            Name = "Background",
-            Size = UDim2.fromScale(1, 1),
-            Position = UDim2.fromScale(0, 0),
-            Image = "rbxassetid://106023436512699",
-            BackgroundTransparency = 1,
-            ScaleType = Enum.ScaleType.Crop,
-            ZIndex = 0
-        })
-
         Window.Root = New("Frame", {
             Size = Window.Size,
             Position = Window.Position,
@@ -2067,7 +2065,6 @@ Components.Window = (function()
             Parent = Config.Parent,
             ClipsDescendants = false, 
         }, {
-            Window.BackgroundImage,
             Window.AcrylicPaint.Frame,
             Window.TabDisplay,
             Window.ContainerCanvas,
@@ -2651,7 +2648,7 @@ Components.Window = (function()
 
         return Window
     end
-end)()
+end)() 
 
 local ElementsTable = {}
 local AddSignal = Creator.AddSignal
