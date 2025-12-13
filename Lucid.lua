@@ -2937,16 +2937,16 @@ ElementsTable.Dropdown = (function()
             
             local listX = btnPos.X - boxWidth - padding
             
-            local titleBarBottom = rootPos.Y + 50 
+            local safeHeaderHeight = 55
+            local minSafeY = rootPos.Y + safeHeaderHeight
             
             local listY = btnPos.Y
-            if listY < titleBarBottom then
-                listY = titleBarBottom
+            if listY < minSafeY then
+                listY = minSafeY
             end
             
-            local windowBottom = rootPos.Y + rootSize.Y
-            
-            local maxAvailableHeight = windowBottom - listY - 5
+            local windowBottom = rootPos.Y + rootSize.Y - 5
+            local maxAvailableHeight = windowBottom - listY
             
             local contentHeight = DropdownListLayout.AbsoluteContentSize.Y + 10
             
@@ -3154,7 +3154,6 @@ ElementsTable.Dropdown = (function()
     end
     return Element
 end)()
-
 
 ElementsTable.Paragraph = (function()
     local Paragraph = {}
